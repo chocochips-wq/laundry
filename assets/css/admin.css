@@ -1,0 +1,1047 @@
+/* Admin Dashboard Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Admin Header */
+.admin-header {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.admin-header h1 {
+    color: #667eea;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Mobile Toggle Button (Hamburger) */
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    z-index: 1001;
+}
+
+.mobile-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: #667eea;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.mobile-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+.admin-nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.admin-nav a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+    color: #667eea;
+}
+
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-user span {
+    color: #666;
+}
+
+.btn-logout {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.btn-logout:hover {
+    background: #ff3838;
+}
+
+/* Main Container */
+.admin-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+/* Page Title */
+.page-title {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.stat-icon.blue {
+    background: #e3f2fd;
+    color: #2196f3;
+}
+
+.stat-icon.green {
+    background: #e8f5e9;
+    color: #4caf50;
+}
+
+.stat-icon.orange {
+    background: #fff3e0;
+    color: #ff9800;
+}
+
+.stat-icon.purple {
+    background: #f3e5f5;
+    color: #9c27b0;
+}
+
+.stat-info h3 {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.stat-info .stat-value {
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Content Card */
+.content-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.card-header h2 {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+/* Admin animated button - kept separate from front-end .btn-animate */
+.btn-animate-admin {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 26px;
+    border-radius: 40px;
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.25);
+    display: inline-block;
+}
+
+.btn-animate-admin:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 28px rgba(102, 126, 234, 0.32);
+}
+
+.btn-animate-admin:active {
+    transform: translateY(-1px);
+}
+
+/* Oval Add Button */
+.btn-oval-add {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+    padding: 0.75rem 1.8rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.25);
+    cursor: pointer;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.btn-oval-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+}
+
+.btn-oval-add:active {
+    transform: translateY(0px);
+}
+
+.btn-success {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.btn-success:hover {
+    background: #43a047;
+}
+
+.btn-danger {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.btn-danger:hover {
+    background: #ff3838;
+}
+
+.btn-warning {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.btn-warning:hover {
+    background: #f57c00;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+}
+
+table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #666;
+}
+
+table tbody tr {
+    transition: all 0.3s ease;
+}
+
+table tbody tr:hover {
+    background: linear-gradient(90deg, #f0f4ff 0%, #ffffff 100%);
+    transform: scale(1.01);
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-pending {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.status-process {
+    background: #e3f2fd;
+    color: #2196f3;
+}
+
+.status-washing {
+    background: #e1f5fe;
+    color: #0288d1;
+}
+
+.status-drying {
+    background: #fff9c4;
+    color: #f9a825;
+}
+
+.status-ironing {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+.status-ready {
+    background: #f1f8e9;
+    color: #689f38;
+}
+
+.status-completed {
+    background: #e8f5e9;
+    color: #4caf50;
+}
+
+.status-cancelled {
+    background: #ffebee;
+    color: #f44336;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-section input,
+.filter-section select {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Price List Styles */
+.price-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.price-item {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    transition: border-color 0.3s;
+}
+
+.price-item:hover {
+    border-color: #667eea;
+}
+
+.price-item h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.price-item .price {
+    color: #667eea;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.price-item .price-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Form Add Service Styles */
+.form-add-service {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr auto;
+    gap: 1rem;
+    align-items: end;
+}
+
+.form-add-service .form-group {
+    margin-bottom: 0;
+}
+
+/* Customer List */
+.customer-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customer-info h4 {
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+.customer-info p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+}
+
+/* Settings Info Grid */
+.settings-info-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.settings-info-grid strong {
+    color: #333;
+}
+
+/* Maintenance Cards */
+.maintenance-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.maintenance-card h4 {
+    margin-bottom: 0.5rem;
+}
+
+.maintenance-card p {
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Loading Spinner */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #667eea;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Alert Messages */
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.alert-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+.alert-danger {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #f44336;
+}
+
+.alert-info {
+    background: #e3f2fd;
+    color: #1565c0;
+    border-left: 4px solid #2196f3;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet - 1024px and below */
+@media (max-width: 1024px) {
+    .admin-container {
+        padding: 0 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .price-list-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile - 768px and below */
+@media (max-width: 768px) {
+    /* Header Responsive */
+    .admin-header {
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+
+    .admin-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .mobile-toggle {
+        display: flex;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .admin-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 280px;
+        background: white;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        flex-direction: column;
+        gap: 0;
+        padding: 5rem 0 1rem 0;
+        transition: right 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .admin-nav.active {
+        right: 0;
+    }
+
+    .admin-nav a {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f0f0f0;
+        width: 100%;
+        color: #333;
+    }
+
+    .admin-nav a:hover,
+    .admin-nav a.active {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+    }
+
+    /* Overlay untuk sidebar */
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        transition: opacity 0.3s ease;
+    }
+
+    .nav-overlay.active {
+        display: block;
+    }
+
+    .admin-user {
+        width: 100%;
+        margin-top: 1rem;
+        justify-content: space-between;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    /* Main Container */
+    .admin-container {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+    }
+
+    .stat-info .stat-value {
+        font-size: 1.5rem;
+    }
+
+    /* Content Card */
+    .content-card {
+        padding: 1rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .card-header h2 {
+        font-size: 1.1rem;
+    }
+
+    /* Buttons */
+    .btn-primary,
+    .btn-logout {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Filter Section */
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-section input,
+    .filter-section select {
+        min-width: 100%;
+    }
+
+    /* Table */
+    .table-responsive {
+        margin: 0 -1rem;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    table th,
+    table td {
+        padding: 0.6rem 0.5rem;
+    }
+
+    /* Hide less important columns on mobile */
+    table th:nth-child(n+5),
+    table td:nth-child(n+5) {
+        display: none;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons button {
+        width: 100%;
+    }
+
+    /* Price List */
+    .price-list-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .price-item {
+        padding: 1rem;
+    }
+
+    .price-item .price {
+        font-size: 1.3rem;
+    }
+
+    .price-item .price-actions {
+        flex-direction: column;
+    }
+
+    .price-item .price-actions button {
+        width: 100%;
+    }
+
+    /* Form Add Service - Responsive */
+    .form-add-service {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-add-service .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-add-service button {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    /* Customer Card */
+    .customer-card {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    /* Settings Info Grid - Responsive */
+    .settings-info-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .settings-info-grid strong {
+        font-size: 0.9rem;
+    }
+
+    /* Maintenance Cards */
+    .maintenance-card {
+        padding: 1rem;
+    }
+
+    .maintenance-card h4 {
+        font-size: 1rem;
+    }
+
+    .maintenance-card button {
+        width: 100%;
+    }
+}
+
+/* Finance Page Styles */
+.stat-income {
+    border-left: 5px solid #4caf50;
+}
+
+.stat-expense {
+    border-left: 5px solid #ff4757;
+}
+
+.stat-balance {
+    border-left: 5px solid #667eea;
+}
+
+.stat-card.stat-income .stat-icon,
+.stat-card.stat-expense .stat-icon,
+.stat-card.stat-balance .stat-icon {
+    font-size: 2rem;
+    background: transparent;
+}
+
+.income-color {
+    color: #4caf50 !important;
+}
+
+.expense-color {
+    color: #ff4757 !important;
+}
+
+.balance-color {
+    color: #667eea !important;
+}
+
+/* Filter Form Styles */
+.filter-form {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+    font-size: 0.95rem;
+}
+
+.filter-actions {
+    align-items: flex-end;
+}
+
+.filter-actions .btn {
+    margin-right: 0.7rem;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    color: #555;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #999;
+}
+
+/* Small Mobile - 480px and below */
+@media (max-width: 480px) {
+    .admin-header h1 {
+        font-size: 1.1rem;
+    }
+
+    .admin-user span {
+        font-size: 0.85rem;
+    }
+
+    .page-title {
+        font-size: 1.3rem;
+    }
+
+    .stat-info h3 {
+        font-size: 0.8rem;
+    }
+
+    .stat-info .stat-value {
+        font-size: 1.3rem;
+    }
+
+    table {
+        font-size: 0.75rem;
+    }
+
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    /* Show only 3 most important columns on small mobile */
+    table th:nth-child(n+4),
+    table td:nth-child(n+4) {
+        display: none;
+    }
+}

@@ -1,0 +1,249 @@
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2c3e50;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        .pricelist-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .pricelist-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .pricelist-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Pricing Container */
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        /* Regular Services Section */
+        .pricing-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        /* Price Cards */
+        .price-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .price-card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .price-card h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .price-card .description {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .price-card .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+
+        .price-card .unit {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Special Items Table */
+        .pricing-table {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .pricing-table table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+        }
+
+        .pricing-table thead tr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .pricing-table th {
+            color: white;
+            padding: 18px 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: left;
+        }
+
+        .pricing-table th:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .pricing-table th:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .pricing-table tbody tr {
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%);
+            transform: scale(1.02);
+        }
+
+        .pricing-table td {
+            padding: 18px 20px;
+            color: #495057;
+            font-size: 1rem;
+        }
+
+        .pricing-table td:first-child {
+            border-radius: 12px 0 0 12px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .pricing-table td:last-child {
+            border-radius: 0 12px 12px 0;
+            font-weight: 600;
+            color: #f5576c;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+
+        .info-box h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .btn-order {
+            background: white;
+            color: #f5576c;
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-order:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pricelist-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .price-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-table {
+                padding: 20px;
+            }
+
+            .pricing-table th,
+            .pricing-table td {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+            }
+        }
