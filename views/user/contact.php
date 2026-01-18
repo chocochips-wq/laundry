@@ -73,7 +73,7 @@ $wa_link = "https://wa.me/{$biz}";
 
                             <div class="info-card">
                                 <h4><span class="icon">✉️</span> Email</h4>
-                                <p><strong>support@berkahlaundry.com</strong></p>
+                                <p><strong>lala.berkahlaundry@gmail.com</strong></p>
                                 <p class="muted">Atau isi formulir di samping untuk pertanyaan non-darurat.</p>
                             </div>
                         </div>
