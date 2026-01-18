@@ -221,7 +221,7 @@ $balance = $totals['total_income'] - $totals['total_expense'];
         <div class="stat-card balance-card">
             <div class="stat-icon">📊</div>
             <div class="stat-info">
-                <h3>Saldo</h3>
+                <h3>Pendapatan</h3>
                 <div class="stat-value blue">Rp <?php echo number_format($balance, 0, ',', '.'); ?></div>
             </div>
         </div>

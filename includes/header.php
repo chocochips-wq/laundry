@@ -430,9 +430,6 @@ session_start();
                                     <div class="user-name"><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?></div>
                                     <div class="user-email"><?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?></div>
                                 </li>
-                                <li><a class="dropdown-item" href="riwayat.php">
-                                    <span class="dropdown-icon">📦</span> Riwayat Order
-                                </a></li>
                                 <li><a class="dropdown-item" href="profile.php">
                                     <span class="dropdown-icon">👤</span> Profile
                                 </a></li>
@@ -458,7 +455,6 @@ session_start();
                             <div class="user-name"><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?></div>
                             <div class="user-email"><?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?></div>
                         </div>
-                        <a class="btn btn-auth btn-profile" href="riwayat.php">📦 Riwayat Order</a>
                         <a class="btn btn-auth btn-profile" href="profile.php">👤 Profile</a>
                         <a class="btn btn-auth btn-login" href="../logout.php?scope=user">🚪 Logout</a>
                     <?php else: ?>

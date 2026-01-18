@@ -301,12 +301,13 @@ $service_prices = [
 
                 <div class="form-group-invoice">
                     <label>Jenis Layanan <span class="required">*</span></label>
-                    <select name="service_type" id="serviceType" required>
-                        <option value="">-- Pilih Layanan --</option>
-                        <option value="cuci_setrika" <?php echo ($_POST['service_type'] ?? '') == 'cuci_setrika' ? 'selected' : ''; ?>>Cuci + Setrika - Rp 6.000/kg</option>
-                        <option value="cuci_kering" <?php echo ($_POST['service_type'] ?? '') == 'cuci_kering' ? 'selected' : ''; ?>>Cuci Kering - Rp 4.000/kg</option>
-                        <option value="setrika" <?php echo ($_POST['service_type'] ?? '') == 'setrika' ? 'selected' : ''; ?>>Setrika Saja - Rp 4.000/kg</option>
-                    </select>
+                    <input
+                        type="text"
+                        name="service_type"
+                        placeholder="Contoh: Cuci Karpet / Bedcover"
+                        required
+                        value="<?php echo htmlspecialchars($_POST['service_type'] ?? ''); ?>"
+                    >
                 </div>
 
                 <div class="form-grid-2">
@@ -317,7 +318,14 @@ $service_prices = [
 
                     <div class="form-group-invoice">
                         <label>Harga/kg (Rp) <span class="required">*</span></label>
-                        <input type="number" name="price_per_kg" id="pricePerKg" value="<?php echo htmlspecialchars($_POST['price_per_kg'] ?? ''); ?>" placeholder="0" required readonly style="background: #f7fafc;">
+                        <input
+                            type="number"
+                            name="price_per_kg"
+                            placeholder="Contoh: 6000"
+                            required
+                            value="<?php echo htmlspecialchars($_POST['price_per_kg'] ?? ''); ?>"
+                        >
+
                     </div>
                 </div>
 
@@ -372,14 +380,6 @@ $service_prices = [
                             <span>LAYANAN:</span>
                         </div>
                         <div class="struk-row">
-                            <span><?php 
-                                $services = [
-                                    'cuci_setrika' => 'Cuci + Setrika',
-                                    'cuci_kering' => 'Cuci Kering',
-                                    'setrika' => 'Setrika Saja'
-                                ];
-                                echo $services[$invoice_data['service_type']]; 
-                            ?></span>
                         </div>
                         <div class="struk-row">
                             <span>Berat:</span>
@@ -440,25 +440,6 @@ $service_prices = [
 </div>
 
 <script>
-    // Auto set price based on service type
-    const serviceType = document.getElementById('serviceType');
-    const pricePerKg = document.getElementById('pricePerKg');
-    
-    const prices = {
-        'cuci_setrika': 6000,
-        'cuci_kering': 4000,
-        'setrika': 4000
-    };
-    
-    serviceType.addEventListener('change', function() {
-        pricePerKg.value = prices[this.value] || 0;
-    });
-    
-    // Set initial price if service already selected
-    if (serviceType.value) {
-        pricePerKg.value = prices[serviceType.value] || 0;
-    }
-
     // Download as JPG
     function downloadAsJPG() {
         const struk = document.getElementById('strukContent');
