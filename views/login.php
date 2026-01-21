@@ -82,8 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             <!-- Header -->
             <div class="auth-header">
-                <h2>Welcome Back</h2>
-                <p>Login to your account</p>
+                <h2>Selamat Datang</h2>
+                <p>Login untuk melanjutkan</p>
             </div>
 
             <!-- Alert -->
@@ -108,9 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                 <div class="form-footer">
                     <label class="remember">
                         <input type="checkbox">
-                        <span>Remember me</span>
+                        <span>Ingat Saya</span>
                     </label>
-                    <a href="#" class="forgot">Forgot password?</a>
+                    <a href="#" class="forgot">Lupa password?</a>
                 </div>
 
                 <button type="submit" name="login" class="btn-submit">Login</button>
@@ -118,11 +118,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             <!-- Register Link -->
             <div class="auth-link">
-                Don't have an account? <a href="register.php">Register</a>
+                Tidak Punya Akun? <a href="register.php">Daftar</a>
             </div>
 
             <div class="back-link">
-                <a href="user/home.php">← Back to Home</a>
+                <a href="user/home.php">← Kembali Ke Home</a>
             </div>
     </div>
 

@@ -34,9 +34,6 @@ $admin_name = $_SESSION['admin_name'] ?? 'Admin';
         <a href="dashboard.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>">
             📊 Dashboard
         </a>
-        <a href="pricelist.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'pricelist.php' ? 'active' : ''; ?>">
-            💰 Harga
-        </a>
         <a href="customers.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'customers.php' ? 'active' : ''; ?>">
             👥 Pelanggan
         </a>
@@ -45,9 +42,6 @@ $admin_name = $_SESSION['admin_name'] ?? 'Admin';
         </a>
         <a href="finances.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'finances.php' ? 'active' : ''; ?>">
             🧾 Keuangan
-        </a>
-        <a href="settings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'settings.php' ? 'active' : ''; ?>">
-            ⚙️ Pengaturan
         </a>
     </nav>
 
