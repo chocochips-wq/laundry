@@ -1,10 +1,10 @@
 <?php
 session_start();
-include_once '../config/db.php';
+require_once __DIR__ . '/../db.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
-    header("Location: home.php");
+    header("Location: ./index.php");
     exit();
 }
 
@@ -142,7 +142,7 @@ $conn->close();
             </div>
 
             <div class="back-link">
-                <a href="home.php">← Back to Home</a>
+                <a href="index.php">← Back to Home</a>
             </div>
         </div>
     </div>

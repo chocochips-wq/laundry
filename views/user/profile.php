@@ -1,6 +1,6 @@
 <?php
 include('../../includes/header.php');
-include_once '../../config/db.php';
+include_once __DIR__ . '/../../db.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {

@@ -1,6 +1,5 @@
 <?php
 // pricelist.php
-include_once '../../config/db.php';  // Koneksi database
 include('../../includes/header.php'); ?>
 
 <!DOCTYPE html>

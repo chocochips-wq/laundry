@@ -209,12 +209,13 @@ include('../../includes/header.php');
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <div class="page-header">
-            <h1>🧺 Order Laundry</h1>
-            <p>Pesan layanan laundry dengan mudah dan cepat</p>
-        </div>
+    <!-- Page Header (Seperti Pricelist) -->
+    <div class="page-header">
+        <h1>Pesan Laundry</h1>
+        <p>Pesan layanan laundry dengan mudah dan cepat</p>
+    </div>
 
+    <div class="main-content">
         <div class="order-container">
             <!-- Alert Messages -->
             <?php if (!empty($_SESSION['success'])): ?>
@@ -283,7 +284,7 @@ include('../../includes/header.php');
                     <!-- Jenis Pesanan -->
                     <div class="mb-4">
                         <label class="form-label fw-bold">Jenis Pesanan <span class="text-danger">*</span></label>
-                        <select name="order_package" id="order_package" class="form-select" required>
+                        <select name="order_package" id="order_package" class="form-select" required style="overflow: visible !important;">
                             <option value="">-- Pilih Jenis Pesanan --</option>
                             <option value="cuci_setrika">Cuci Setrika (Kiloan)</option>
                             <option value="cuci_kering">Cuci Kering (Kiloan)</option>
@@ -460,3 +461,7 @@ include('../../includes/header.php');
             }
         });
     </script>
+        </div>
+    </div>
+</body>
+</html>

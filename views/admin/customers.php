@@ -1,7 +1,7 @@
 <?php
 $page_title='Pengguna Terdaftar';
 include('../../includes/admin-header.php');
-require_once('../../config/db.php');
+include_once __DIR__ . '/../../db.php';
 
 $db=new Database();
 $conn=$db->getConnection();

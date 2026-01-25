@@ -14,20 +14,20 @@
         /* Page Header */
         .page-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 60px 0 40px;
+            padding: 80px 0 60px;
             text-align: center;
             color: white;
             margin-bottom: 50px;
         }
 
         .page-header h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .page-header p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
         }
 
@@ -45,6 +45,7 @@
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .form-section-title {
@@ -79,6 +80,17 @@
             border-color: #667eea;
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
             outline: none;
+        }
+
+        /* Dropdown Menu Fix */
+        .mb-4 {
+            position: relative;
+            z-index: auto;
+        }
+
+        .form-select {
+            position: relative;
+            z-index: 10;
         }
 
         /* Service Cards */

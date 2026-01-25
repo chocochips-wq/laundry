@@ -1,11 +1,26 @@
 <?php
-// contact.php
-include_once '../../config/db.php';
+include_once __DIR__ . '/../../db.php';
 include('../../includes/header.php');
 
-// Start session jika belum
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
+    $name = trim($_POST['name']);
+    $phone = trim($_POST['phone']);
+    $email = trim($_POST['email'] ?? '');
+    $message = trim($_POST['message']);
+
+    if ($name && $phone && $message) {
+        $stmt = $conn->prepare(
+            "INSERT INTO contact_messages (name, phone, email, message) VALUES (?, ?, ?, ?)"
+        );
+        $stmt->bind_param("ssss", $name, $phone, $email, $message);
+        $stmt->execute();
+        $stmt->close();
+
+        echo json_encode(['status' => 'ok']);
+    } else {
+        echo json_encode(['status' => 'error']);
+    }
+    exit;
 }
 
 // ========== NOMOR WHATSAPP - HARDCODED ==========
@@ -26,26 +41,32 @@ $wa_link = "https://wa.me/{$biz}";
     <meta name="description" content="Hubungi Berkah Laundry untuk layanan laundry profesional di Cibitung, Bekasi. Tersedia via WhatsApp, telepon, dan email.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/kontak.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../../assets/css/home.css">
     <style>
-        /* Inline CSS jika kontak.css tidak ada */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .contact-hero {
+        /* Header Section (Seperti Pricelist) */
+        .contact-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px 60px;
+            padding: 80px 0 60px;
             text-align: center;
+            color: white;
+            margin-bottom: 50px;
         }
-        .contact-hero h2 {
+
+        .contact-header h1 {
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 15px;
         }
-        .contact-hero .subtitle {
+
+        .contact-header p {
             font-size: 1.2rem;
-            opacity: 0.95;
+            opacity: 0.9;
+        }
+
+        /* Inline CSS jika kontak.css tidak ada */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .contact-content {
             background: white;
@@ -195,16 +216,14 @@ $wa_link = "https://wa.me/{$biz}";
 </head>
 <body>
 
+    <!-- Header Section (Seperti Pricelist) -->
+    <div class="contact-header">
+        <h1>Kontak Kami</h1>
+        <p>Kami siap melayani kebutuhan laundry Anda dengan profesional dan ramah</p>
+    </div>
+
     <!-- Contact Section -->
     <div class="contact-section">
-        <!-- Hero Header -->
-        <div class="contact-hero">
-            <div class="container">
-                <h2>Kontak Kami</h2>
-                <p class="subtitle">Kami siap melayani kebutuhan laundry Anda dengan profesional dan ramah</p>
-            </div>
-        </div>
-
         <!-- White Content Section -->
         <div class="contact-content">
             <div class="container">
@@ -328,62 +347,45 @@ $wa_link = "https://wa.me/{$biz}";
 
             // Form submission - Redirect ke WhatsApp
             if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Prevent default submit
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-                    const name = document.getElementById('name').value.trim();
-                    const phone = document.getElementById('phone').value.trim();
-                    const email = document.getElementById('email').value.trim();
-                    const message = document.getElementById('message').value.trim();
+    const formData = new FormData(form);
+    formData.append('ajax', '1');
 
-                    // Validate name
-                    if (name.length < 3) {
-                        alert('⚠️ Nama harus minimal 3 karakter!');
-                        document.getElementById('name').focus();
-                        return false;
-                    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
 
-                    // Validate phone
-                    const phoneDigits = phone.replace(/\D/g, '');
-                    if (phoneDigits.length < 9 || phoneDigits.length > 15) {
-                        alert('⚠️ Nomor telepon harus 9-15 digit!');
-                        document.getElementById('phone').focus();
-                        return false;
-                    }
+    fetch('', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.status === 'ok') {
+            // buat pesan WhatsApp
+            let waMessage = `Halo Berkah Laundry,\n\n`;
+            waMessage += `Nama: ${form.name.value}\n`;
+            waMessage += `Telepon: ${form.phone.value}\n`;
+            if (form.email.value) {
+                waMessage += `Email: ${form.email.value}\n`;
+            }
+            waMessage += `\nPesan:\n${form.message.value}\n\nTerima kasih.`;
 
-                    // Validate message
-                    if (message.length < 10) {
-                        alert('⚠️ Pesan minimal 10 karakter!');
-                        document.getElementById('message').focus();
-                        return false;
-                    }
-
-                    if (message.length > 1000) {
-                        alert('⚠️ Pesan maksimal 1000 karakter!');
-                        document.getElementById('message').focus();
-                        return false;
-                    }
-
-                    // Show loading state
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Mengirim...';
-
-                    // Buat pesan WhatsApp
-                    let waMessage = `Halo Berkah Laundry,\n\n`;
-                    waMessage += `Nama: ${name}\n`;
-                    waMessage += `Telepon: ${phone}\n`;
-                    if (email) {
-                        waMessage += `Email: ${email}\n`;
-                    }
-                    waMessage += `\nPesan:\n${message}\n\n`;
-                    waMessage += `Terima kasih.`;
-
-                    const encodedMessage = encodeURIComponent(waMessage);
-                    const waUrl = `<?php echo $wa_link; ?>?text=${encodedMessage}`;
-
-                    // Redirect ke WhatsApp
-                    window.location.href = waUrl;
-                });
+            const waUrl = `<?php echo $wa_link; ?>?text=${encodeURIComponent(waMessage)}`;
+            window.location.href = waUrl;
+        } else {
+            alert('Gagal menyimpan pesan.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = '✉️ Kirim Pesan';
+        }
+    })
+    .catch(() => {
+        alert('Pesan berhasil dirikim.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '✉️ Kirim Pesan';
+    });
+});
             }
         })();
     </script>

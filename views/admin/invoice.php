@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Buat Struk';
 include('../../includes/admin-header.php');
-require_once('../../config/db.php');
+include_once __DIR__ . '/../../db.php';
 
 $errors = [];
 $invoice_data = null;
@@ -349,8 +349,8 @@ $service_prices = [
                 <div id="strukContent">
                     <div class="struk-header">
                         <h2>BERKAH LAUNDRY</h2>
-                        <p>Jl. Contoh No. 123, Jakarta</p>
-                        <p>Telp: 081234567890</p>
+                        <p>Cluster Mandala, Blok B No.15 Rt.11/Rw.26 Wanasari</p>
+                        <p>Telp: 081319265466</p>
                     </div>
 
                     <div class="struk-body">

@@ -2,7 +2,7 @@
 session_start();
 
 // Include database connection
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../db.php';
 
 // Note: allow simultaneous admin and user logins in different tabs by using role-specific session keys.
 // Do not auto-redirect here so users can sign in as different roles in the same browser session.
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     $_SESSION['user_address'] = $user['address'] ?? '';
 
                     // Redirect ke home user
-                    header("Location: user/home.php");
+                    header("Location: /laundry/index.php");
                     exit();
                 }
             } else {
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             </div>
 
             <div class="back-link">
-                <a href="user/home.php">← Kembali Ke Home</a>
+                <a href="user/index.php">← Kembali Ke Home</a>
             </div>
     </div>
 

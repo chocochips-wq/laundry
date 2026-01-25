@@ -26,7 +26,7 @@
 
 <!-- Footer -->
 <footer>
-    <p>&copy; 2025 Berkah Laundry | <a href="home.php">Home</a> | <a href="contact.php">Contact Us</a></p>
+    <p>&copy; 2025 Berkah Laundry | <a href="index.php">Home</a> | <a href="contact.php">Contact Us</a></p>
 </footer>
 
 <!-- Script JS yang dibutuhkan -->

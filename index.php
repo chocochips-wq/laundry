@@ -1,7 +1,7 @@
 <?php
-// home.php
-include_once '../../config/db.php';
-include('../../includes/header.php'); 
+// index.php
+include_once 'db.php';
+include('./includes/header.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ include('../../includes/header.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Laundry - Layanan Kami</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/home.css">
+    <link rel="stylesheet" href="./assets/css/home.css">
 </head>
 <body>
 
@@ -26,7 +26,7 @@ include('../../includes/header.php');
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <div class="col">
                     <div class="card service-card">
-                        <img src="../../assets/images/cuci-setrika-wangi.jpg" class="card-img-top" alt="Cuci Setrika">
+                        <img src="./assets/images/cuci-setrika-wangi.jpg" class="card-img-top" alt="Cuci Setrika">
                         <div class="card-body">
                             <h5 class="card-title">Cuci Setrika</h5>
                             <p class="card-text">Cuci dan setrika pakaian Anda dengan hasil yang rapi dan harga terjangkau.</p>
@@ -38,7 +38,7 @@ include('../../includes/header.php');
 
                 <div class="col">
                     <div class="card service-card">
-                        <img src="../../assets/images/cuci-kering.jpg" class="card-img-top" alt="Cuci Kering">
+                        <img src="./assets/images/cuci-kering.jpg" class="card-img-top" alt="Cuci Kering">
                         <div class="card-body">
                             <h5 class="card-title">Cuci Kering</h5>
                             <p class="card-text">Layanan cuci pakaian tanpa perlu dijemur, cocok untuk pakaian yang sensitif.</p>
@@ -50,7 +50,7 @@ include('../../includes/header.php');
 
                 <div class="col">
                     <div class="card service-card">
-                        <img src="../../assets/images/setrika-pakaian.jpg" class="card-img-top" alt="Setrika Pakaian">
+                        <img src="./assets/images/setrika-pakaian.jpg" class="card-img-top" alt="Setrika Pakaian">
                         <div class="card-body">
                             <h5 class="card-title">Setrika Pakaian</h5>
                             <p class="card-text">Layanan setrika pakaian dengan hasil yang rapi dan cepat.</p>
@@ -112,7 +112,7 @@ include('../../includes/header.php');
         </div>
     </div>
 
-   <?php include('../../includes/footer.php'); ?>
+   <?php include('./includes/footer.php'); ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 

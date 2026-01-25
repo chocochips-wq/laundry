@@ -1,7 +1,9 @@
 <?php
-// header.php
 session_start();
+
+define('BASE_URL','/laundry');
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -391,7 +393,7 @@ session_start();
 
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="../user/home.php">
+            <a class="navbar-brand" href="<?= BASE_URL ?>/index.php">
                 <span class="brand-icon">🧺</span>
                 Berkah Laundry
             </a>
@@ -407,16 +409,16 @@ session_start();
 
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="../user/home.php">Home</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>/index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../user/pricelist.php">Daftar Harga</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>/views/user/pricelist.php">Daftar Harga</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../user/order.php">Pesan</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>/views/user/order.php">Pesan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../user/contact.php">Kontak Kami</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>/views/user/contact.php">Kontak Kami</a>
                     </li>
                     
                     <?php if (isset($_SESSION['user_id'])): ?>
@@ -430,11 +432,9 @@ session_start();
                                     <div class="user-name"><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?></div>
                                     <div class="user-email"><?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?></div>
                                 </li>
-                                <li><a class="dropdown-item" href="profile.php">
-                                    <span class="dropdown-icon">👤</span> Profile
-                                </a></li>
+                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/views/user/profile.php">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="../logout.php?scope=user">
+                                <li><a class="dropdown-item" href="/laundry/views/logout.php?scope=user">
                                     <span class="dropdown-icon">🚪</span> Logout
                                 </a></li>
                             </ul>
@@ -442,7 +442,7 @@ session_start();
                     <?php else: ?>
                         <!-- User is not logged in - Desktop View -->
                         <li class="nav-item d-none d-lg-block">
-                            <a class="btn btn-auth btn-login" href="../login.php">👤</a>
+                            <a class="btn btn-auth btn-login" href="<?= BASE_URL ?>/views/login.php">👤</a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -455,11 +455,11 @@ session_start();
                             <div class="user-name"><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?></div>
                             <div class="user-email"><?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?></div>
                         </div>
-                        <a class="btn btn-auth btn-profile" href="profile.php">👤 Profile</a>
-                        <a class="btn btn-auth btn-login" href="../logout.php?scope=user">🚪 Logout</a>
+                        <a class="btn btn-auth btn-profile" href="<?= BASE_URL ?>/views/user/profile.php">👤 Profile</a>
+                        <a class="btn btn-auth btn-login" href="<?= BASE_URL ?>/views/logout.php?scope=user">🚪 Logout</a>
                     <?php else: ?>
                         <!-- User is not logged in - Mobile View -->
-                        <a class="btn btn-auth btn-login" href="../login.php">Login</a>
+                        <a class="btn btn-auth btn-login" href="<?= BASE_URL ?>/views/login.php">Login</a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -511,7 +511,7 @@ session_start();
             
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href === currentPage) {
+                if (href && href.includes(currentPage)) {
                     link.classList.add('active');
                 }
             });

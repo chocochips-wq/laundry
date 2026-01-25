@@ -17,7 +17,7 @@ $admin_name = $_SESSION['admin_name'] ?? 'Admin';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title ?? 'Admin Panel'; ?> - Berkah Laundry</title>
-    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../assets/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -37,11 +37,14 @@ $admin_name = $_SESSION['admin_name'] ?? 'Admin';
         <a href="customers.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'customers.php' ? 'active' : ''; ?>">
             👥 Pelanggan
         </a>
+        <a href="messages.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'messages.php' ? 'active' : ''; ?>">
+            📬 Pesan
+        </a>
         <a href="invoice.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'invoice.php' ? 'active' : ''; ?>">
             🧾 Invoice
         </a>
         <a href="finances.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'finances.php' ? 'active' : ''; ?>">
-            🧾 Keuangan
+            💰 Keuangan
         </a>
     </nav>
 

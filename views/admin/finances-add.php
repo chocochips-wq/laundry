@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Tambah / Edit Transaksi';
 include('../../includes/admin-header.php');
-require_once('../../config/db.php');
+include_once __DIR__ . '/../../db.php';
 require_once('../../config/Finance.php');
 
 $errors = [];
