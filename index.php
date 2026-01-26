@@ -1,7 +1,13 @@
 <?php
 // index.php - Main entry point
-require_once 'db.php';
-require_once './includes/header.php'; 
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+// Require database
+require_once __DIR__ . '/db.php';
+
+// Require header
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!DOCTYPE html>

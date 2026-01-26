@@ -42,10 +42,10 @@ $env_file = __DIR__ . '/.env';
 loadEnv($env_file);
 
 // Get database configuration from environment or use defaults
-$servername = getenv('DB_HOST') ?: 'localhost';
-$username = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASS') ?: '';
-$dbname = getenv('DB_NAME') ?: 'laundry_db';
+$servername = getenv('DB_HOST') ?: 'sql313.infinityfree.com';
+$username = getenv('DB_USER') ?: 'if0_40995557';
+$password = getenv('DB_PASS') ?: 'berkahlaundry';
+$dbname = getenv('DB_NAME') ?: 'if0_40995557_laundry_db';
 
 // MySQLi connection (untuk file lama)
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -72,10 +72,10 @@ class Database {
     private $conn;
 
     public function __construct() {
-        $this->host = getenv('DB_HOST') ?: 'localhost';
-        $this->db_name = getenv('DB_NAME') ?: 'laundry_db';
-        $this->username = getenv('DB_USER') ?: 'root';
-        $this->password = getenv('DB_PASS') ?: '';
+        $this->host = getenv('DB_HOST') ?: 'sql313.infinityfree.com';
+        $this->db_name = getenv('DB_NAME') ?: 'if0_40995557_laundry_db';
+        $this->username = getenv('DB_USER') ?: 'if0_40995557';
+        $this->password = getenv('DB_PASS') ?: 'berkahlaundry';
     }
 
     public function getConnection() {
