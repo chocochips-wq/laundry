@@ -1,10 +1,13 @@
 <?php
 session_start();
+
+// Include security
+require_once __DIR__ . '/../config/security.php';
 require_once __DIR__ . '/../db.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
-    header("Location: ./index.php");
+    header("Location: " . (defined('BASE_URL') ? BASE_URL : '/laundry') . "/index.php");
     exit();
 }
 
@@ -13,41 +16,71 @@ $success_message = "";
 
 // Handle registration
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-    
-    if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
-        $error_message = "Please fill in all required fields!";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid email address!";
-    } elseif (strlen($password) < 6) {
-        $error_message = "Password must be at least 6 characters!";
-    } elseif ($password !== $confirm_password) {
-        $error_message = "Passwords do not match!";
+    // Verify CSRF token
+    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
+        $error_message = "Invalid request. Please try again.";
+        logSecurityEvent('CSRF_TOKEN_MISMATCH', ['ip' => $_SERVER['REMOTE_ADDR']]);
     } else {
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $name = sanitizeInput($_POST['name'] ?? '');
+        $email = sanitizeInput($_POST['email'] ?? '');
+        $phone = sanitizeInput($_POST['phone'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $confirm_password = $_POST['confirm_password'] ?? '';
         
-        if ($result->num_rows > 0) {
-            $error_message = "Email is already registered!";
+        // Validation
+        if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
+            $error_message = "Please fill in all required fields!";
+        } elseif (strlen($name) < 3 || strlen($name) > 100) {
+            $error_message = "Name must be between 3 and 100 characters!";
+        } elseif (!validateEmail($email)) {
+            $error_message = "Invalid email address!";
+        } elseif (!empty($phone) && !validatePhone($phone)) {
+            $error_message = "Invalid phone number format!";
+        } elseif (!validatePassword($password)) {
+            $error_message = "Password must be between 6 and 255 characters!";
+        } elseif ($password !== $confirm_password) {
+            $error_message = "Passwords do not match!";
         } else {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $name, $email, $phone, $hashed_password);
-            
-            if ($stmt->execute()) {
-                $success_message = "Registration successful! Redirecting...";
-                echo "<script>setTimeout(function(){ window.location.href = 'login.php'; }, 2000);</script>";
+            // Check if email already exists
+            $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+            if (!$stmt) {
+                $error_message = displayError("An error occurred. Please try again.", $conn->error);
+                logSecurityEvent('DATABASE_ERROR', ['query' => 'register_check']);
             } else {
-                $error_message = "Registration failed!";
+                $stmt->bind_param("s", $email);
+                if (!$stmt->execute()) {
+                    $error_message = displayError("An error occurred. Please try again.", $stmt->error);
+                    logSecurityEvent('DATABASE_ERROR', ['query' => 'register_execute']);
+                } else {
+                    $result = $stmt->get_result();
+                    
+                    if ($result->num_rows > 0) {
+                        $error_message = "Email is already registered!";
+                        logSecurityEvent('REGISTRATION_FAILED', ['email' => htmlspecialchars($email), 'reason' => 'email_exists']);
+                    } else {
+                        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                        $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password, role, created_at) VALUES (?, ?, ?, ?, 'user', NOW())");
+                        
+                        if (!$stmt) {
+                            $error_message = displayError("An error occurred. Please try again.", $conn->error);
+                            logSecurityEvent('DATABASE_ERROR', ['query' => 'register_insert']);
+                        } else {
+                            $stmt->bind_param("ssss", $name, $email, $phone, $hashed_password);
+                            
+                            if (!$stmt->execute()) {
+                                $error_message = displayError("Registration failed. Please try again.", $stmt->error);
+                                logSecurityEvent('DATABASE_ERROR', ['query' => 'register_insert_execute']);
+                            } else {
+                                $success_message = "Registration successful! Redirecting to login...";
+                                logSecurityEvent('REGISTRATION_SUCCESS', ['email' => htmlspecialchars($email)]);
+                                echo "<script>setTimeout(function(){ window.location.href = 'login.php'; }, 2000);</script>";
+                            }
+                        }
+                    }
+                }
+                $stmt->close();
             }
         }
-        $stmt->close();
     }
 }
 
@@ -101,29 +134,32 @@ $conn->close();
 
             <!-- Form -->
             <form method="POST" action="">
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo htmlEscape(getCSRFToken()); ?>">
+                
                 <div class="input-group">
                     <label>Full Name</label>
-                    <input type="text" name="name" placeholder="" required>
+                    <input type="text" name="name" placeholder="" required maxlength="100" value="<?php echo isset($_POST['name']) ? htmlEscape(sanitizeInput($_POST['name'])) : ''; ?>">
                 </div>
 
                 <div class="input-group">
                     <label>Email</label>
-                    <input type="email" name="email" placeholder="" required>
+                    <input type="email" name="email" placeholder="" required value="<?php echo isset($_POST['email']) ? htmlEscape(sanitizeInput($_POST['email'])) : ''; ?>">
                 </div>
 
                 <div class="input-group">
                     <label>Phone (Optional)</label>
-                    <input type="tel" name="phone" placeholder="">
+                    <input type="tel" name="phone" placeholder="" value="<?php echo isset($_POST['phone']) ? htmlEscape(sanitizeInput($_POST['phone'])) : ''; ?>">
                 </div>
 
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" name="password" placeholder="" required>
+                    <input type="password" name="password" placeholder="" required minlength="6" maxlength="255">
                 </div>
 
                 <div class="input-group">
                     <label>Confirm Password</label>
-                    <input type="password" name="confirm_password" placeholder="" required>
+                    <input type="password" name="confirm_password" placeholder="" required minlength="6" maxlength="255">
                 </div>
 
                 <div class="form-footer">

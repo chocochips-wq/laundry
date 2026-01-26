@@ -1,66 +1,101 @@
 <?php
 session_start();
 
-// Include database connection
+// Include security
+require_once __DIR__ . '/../config/security.php';
 require_once __DIR__ . '/../db.php';
-
-// Note: allow simultaneous admin and user logins in different tabs by using role-specific session keys.
-// Do not auto-redirect here so users can sign in as different roles in the same browser session.
-
 
 $error_message = "";
 
 // Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    
-    if (empty($email) || empty($password)) {
-        $error_message = "Please fill in all fields!";
+    // Verify CSRF token
+    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
+        $error_message = "Invalid request. Please try again.";
+        logSecurityEvent('CSRF_TOKEN_MISMATCH', ['ip' => $_SERVER['REMOTE_ADDR']]);
     } else {
-        // Query dengan MySQLi
-        $stmt = $conn->prepare("SELECT id, name, email, password, role, phone, address FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows === 1) {
-            $user = $result->fetch_assoc();
-            
-            if (password_verify($password, $user['password'])) {
-                // Set role-specific session keys so admin and users can be logged in simultaneously
-                if ($user['role'] === 'admin') {
-                    $_SESSION['admin_id'] = $user['id'];
-                    $_SESSION['admin_name'] = $user['name'];
-                    $_SESSION['admin_email'] = $user['email'];
-                    $_SESSION['admin_role'] = 'admin';
-                    $_SESSION['admin_phone'] = $user['phone'] ?? '';
-                    $_SESSION['admin_address'] = $user['address'] ?? '';
-
-                    // Redirect ke dashboard admin
-                    header("Location: admin/dashboard.php");
-                    exit();
-                } else {
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_name'] = $user['name'];
-                    $_SESSION['user_email'] = $user['email'];
-                    $_SESSION['user_role'] = 'user';
-                    $_SESSION['user_phone'] = $user['phone'] ?? '';
-                    $_SESSION['user_address'] = $user['address'] ?? '';
-
-                    // Redirect ke home user
-                    header("Location: /laundry/index.php");
-                    exit();
-                }
-            } else {
-                $error_message = "Invalid email or password!";
-            }
+        // Check rate limiting
+        $rate_limit_key = 'login_attempt_' . $_SERVER['REMOTE_ADDR'];
+        if (!checkRateLimit($rate_limit_key, 5, 900)) { // 5 attempts per 15 minutes
+            $error_message = "Too many login attempts. Please try again in 15 minutes.";
+            logSecurityEvent('RATE_LIMIT_EXCEEDED', ['ip' => $_SERVER['REMOTE_ADDR']]);
         } else {
-            $error_message = "Invalid email or password!";
+            $email = sanitizeInput($_POST['email'] ?? '');
+            $password = $_POST['password'] ?? '';
+            
+            if (empty($email) || empty($password)) {
+                $error_message = "Please fill in all fields!";
+                incrementRateLimit($rate_limit_key);
+            } elseif (!validateEmail($email)) {
+                $error_message = "Invalid email format!";
+                incrementRateLimit($rate_limit_key);
+            } else {
+                // Use prepared statement to prevent SQL injection
+                $stmt = $conn->prepare("SELECT id, name, email, password, role, phone, address FROM users WHERE email = ?");
+                if (!$stmt) {
+                    $error_message = displayError("An error occurred. Please try again.", $conn->error);
+                    logSecurityEvent('DATABASE_ERROR', ['query' => 'login_select']);
+                } else {
+                    $stmt->bind_param("s", $email);
+                    if (!$stmt->execute()) {
+                        $error_message = displayError("An error occurred. Please try again.", $stmt->error);
+                        logSecurityEvent('DATABASE_ERROR', ['query' => 'login_execute']);
+                    } else {
+                        $result = $stmt->get_result();
+                        
+                        if ($result->num_rows === 1) {
+                            $user = $result->fetch_assoc();
+                            
+                            if (password_verify($password, $user['password'])) {
+                                // Regenerate session ID to prevent session fixation
+                                session_regenerate_id(true);
+                                
+                                // Set role-specific session keys
+                                if ($user['role'] === 'admin') {
+                                    $_SESSION['admin_id'] = $user['id'];
+                                    $_SESSION['admin_name'] = htmlspecialchars($user['name']);
+                                    $_SESSION['admin_email'] = htmlspecialchars($user['email']);
+                                    $_SESSION['admin_role'] = 'admin';
+                                    $_SESSION['admin_phone'] = htmlspecialchars($user['phone'] ?? '');
+                                    $_SESSION['admin_address'] = htmlspecialchars($user['address'] ?? '');
+                                    
+                                    logSecurityEvent('LOGIN_SUCCESS', ['user' => htmlspecialchars($user['email']), 'role' => 'admin']);
+                                    
+                                    // Redirect using safe redirect function
+                                    header("Location: " . BASE_URL . "/views/admin/dashboard.php");
+                                    exit();
+                                } else {
+                                    $_SESSION['user_id'] = $user['id'];
+                                    $_SESSION['user_name'] = htmlspecialchars($user['name']);
+                                    $_SESSION['user_email'] = htmlspecialchars($user['email']);
+                                    $_SESSION['user_role'] = 'user';
+                                    $_SESSION['user_phone'] = htmlspecialchars($user['phone'] ?? '');
+                                    $_SESSION['user_address'] = htmlspecialchars($user['address'] ?? '');
+                                    
+                                    logSecurityEvent('LOGIN_SUCCESS', ['user' => htmlspecialchars($user['email']), 'role' => 'user']);
+                                    
+                                    // Redirect using safe redirect function
+                                    header("Location: " . BASE_URL . "/index.php");
+                                    exit();
+                                }
+                            } else {
+                                $error_message = "Invalid email or password!";
+                                incrementRateLimit($rate_limit_key);
+                                logSecurityEvent('LOGIN_FAILED', ['email' => htmlspecialchars($email), 'reason' => 'invalid_password']);
+                            }
+                        } else {
+                            $error_message = "Invalid email or password!";
+                            incrementRateLimit($rate_limit_key);
+                            logSecurityEvent('LOGIN_FAILED', ['email' => htmlspecialchars($email), 'reason' => 'user_not_found']);
+                        }
+                    }
+                    $stmt->close();
+                }
+            }
         }
-        $stmt->close();
     }
 }
+?>
 ?>
 
 <!DOCTYPE html>
@@ -95,9 +130,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             <!-- Form -->
             <form method="POST" action="">
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo htmlEscape(getCSRFToken()); ?>">
+                
                 <div class="input-group">
                     <label>Email</label>
-                    <input type="email" name="email" placeholder="your@email.com" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                    <input type="email" name="email" placeholder="your@email.com" required value="<?php echo isset($_POST['email']) ? htmlEscape(sanitizeInput($_POST['email'])) : ''; ?>">
                 </div>
 
                 <div class="input-group">

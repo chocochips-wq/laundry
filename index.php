@@ -1,7 +1,7 @@
 <?php
-// index.php
-include_once 'db.php';
-include('./includes/header.php'); 
+// index.php - Main entry point
+require_once 'db.php';
+require_once './includes/header.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ include('./includes/header.php');
                             <h5 class="card-title">Cuci Setrika</h5>
                             <p class="card-text">Cuci dan setrika pakaian Anda dengan hasil yang rapi dan harga terjangkau.</p>
                             <p class="card-text"><strong>Price: Rp 6.000 / Kg</strong></p>
-                            <a href="order.php?service=cuci_setrika" class="btn btn-animate">Order Now</a>
+                            <a href="<?= BASE_URL ?>/views/user/order.php?service=cuci_setrika" class="btn btn-animate">Order Now</a>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ include('./includes/header.php');
                             <h5 class="card-title">Cuci Kering</h5>
                             <p class="card-text">Layanan cuci pakaian tanpa perlu dijemur, cocok untuk pakaian yang sensitif.</p>
                             <p class="card-text"><strong>Price: Rp 4.000 / Kg</strong></p>
-                            <a href="order.php?service=cuci_kering" class="btn btn-animate">Order Now</a>
+                            <a href="<?= BASE_URL ?>/views/user/order.php?service=cuci_kering" class="btn btn-animate">Order Now</a>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@ include('./includes/header.php');
                             <h5 class="card-title">Setrika Pakaian</h5>
                             <p class="card-text">Layanan setrika pakaian dengan hasil yang rapi dan cepat.</p>
                             <p class="card-text"><strong>Price: Rp 4.000 / Kg</strong></p>
-                            <a href="order.php?service=setrika" class="btn btn-animate">Order Now</a>
+                            <a href="<?= BASE_URL ?>/views/user/order.php?service=setrika" class="btn btn-animate">Order Now</a>
                         </div>
                     </div>
                 </div>
@@ -106,8 +106,8 @@ include('./includes/header.php');
             <h2>Ready to Try Our Service?</h2>
             <p>Dapatkan pakaian bersih dan wangi tanpa repot!</p>
             <div>
-                <a href="order.php" class="btn-cta me-3">Order Now</a>
-                <a href="pricelist.php" class="btn-cta">View Pricelist</a>
+                <a href="<?= BASE_URL ?>/views/user/order.php" class="btn-cta me-3">Order Now</a>
+                <a href="<?= BASE_URL ?>/views/user/pricelist.php" class="btn-cta">View Pricelist</a>
             </div>
         </div>
     </div>

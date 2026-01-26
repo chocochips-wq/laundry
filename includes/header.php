@@ -1,7 +1,41 @@
 <?php
+// Start session with secure settings
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_secure', 1); // HTTPS only
+ini_set('session.cookie_samesite', 'Strict');
+ini_set('session.use_strict_mode', 1);
+
 session_start();
 
-define('BASE_URL','/laundry');
+// Include security module
+require_once __DIR__ . '/../config/security.php';
+
+// Auto-detect BASE_URL untuk compatibility dengan localhost dan production
+if (empty($_SERVER['HTTP_HOST']) === false) {
+    $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+    $domain = $_SERVER['HTTP_HOST'];
+    $script_path = dirname($_SERVER['SCRIPT_NAME']);
+    
+    // Untuk InfinityFree atau production - biasanya langsung di root public_html
+    if (strpos($domain, 'localhost') === false && strpos($domain, '127.0.0.1') === false) {
+        // Production environment - file ada di root public_html
+        define('BASE_URL', '');
+    } else {
+        // Localhost environment - file ada di folder laundry
+        define('BASE_URL', '/laundry');
+    }
+} else {
+    define('BASE_URL', '/laundry');
+}
+
+// Session timeout (30 minutes)
+$session_timeout = 1800;
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $session_timeout)) {
+    session_unset();
+    session_destroy();
+    session_start();
+}
+$_SESSION['last_activity'] = time();
 ?>
 
 
